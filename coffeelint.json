@@ -1,0 +1,6 @@
+{
+  "still_todo": {
+    "level": "warn",
+    "module": "./index.coffee"
+  }
+}

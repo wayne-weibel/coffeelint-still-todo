@@ -1,45 +1,45 @@
 regexes =
-  camelCase: /^\$?\$?_?_?[a-zA-Z][a-zA-Z\d]*$/
-  allCaps: /^[A-Z][_A-Z\d]*$/
+  lineHasComment: /^\s*[^\#]*\#/
+  inlineToDo: /\bto\s?do\b/i
+  blockToDo: /^(\s|\#)*to\s?do\b/i
 
 module.exports = class StillToDo
   rule:
     name: 'still_todo'
-    level: 'warn'
-    message: 'Still something ToDo?'
-    description: """
+    level: 'ignore'
+    message: 'Still something to be done?'
+    description: '''
       This rule checks for the existence of TODO comments. eg:
       <pre>
       <code>
       # todo
       # ToDo
       # TODO
-      # TODO:
+      # TO DO:
+      # etc. and also within code blocks
       </code>
       </pre>
-      """
+      '''
 
-  tokens: ['IDENTIFIER']
+  lintLine: (line, lineApi) ->
+    # If we're in a block comment there won't be any tokens on this
+    # line. Some previous line holds the token spanning multiple lines.
+    tokens = lineApi.tokensByLine[lineApi.lineNumber]
+    if not tokens
+      if regexes.blockToDo.test(line)
+      # assumption is that the TODO will be at the 'beginning' of the line
+        return true
+      return null
 
-  lintAST: (node, @astApi) ->
-      @lintNode node
-      undefined
+    # To avoid confusion when a string might contain a "#", every string
+    # on this line will be removed. before checking for a comment
+    _line = line
+    for str in (token[1] for token in tokens when token[0] is 'STRING')
+      _line = _line.replace(str, 'STRING')
 
-  lintNode: (node) ->
-    # It's common to reference a variable as an object property, e.g.
-    # MyClass.myVarName, so loop through the next tokens until
-    # we find the real identifier
-    varName = null
-    offset = 0
-    while not varName?
-      if tokenApi.peek(offset + 1)?[0] is '.'
-        offset += 2
-      else if tokenApi.peek(offset)?[0] is '@'
-        offset += 1
-      else
-        varName = tokenApi.peek(offset)[1]
+    if regexes.lineHasComment.test(_line)
+      line = line.slice(_line.indexOf('#'))
+      if regexes.inlineToDo.test(line)
+        return true
 
-    # Now check for the error
-    if not regexes.camelCase.test(varName) and not regexes.allCaps.test(varName) and
-       varName != '_' and varName != '$'
-      return {context: "var name: #{varName}"}
+    null

@@ -7,11 +7,27 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "CoffeeLint",
-    "CoffeeScript",
-    "Lint",
-    "TODO"
+    "coffeelint",
+    "coffeelintrule",
+    "coffeescript",
+    "coffee-script",
+    "lint",
+    "todo"
   ],
   "author": "Wayne Weibel",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "coffee-script": "^1.10.0"
+  },
+  "peerDependencies": {
+    "coffeelint": "^1.15"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wayne-weibel/coffeelint-still-todo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wayne-weibel/coffeelint-still-todo/issues"
+  },
+  "homepage": "https://github.com/wayne-weibel/coffeelint-still-todo#readme"
 }
