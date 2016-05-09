@@ -17,7 +17,7 @@ Add the following configuration to `coffeelint.json`:
 
 ```json
 "still_todo": {
-  "level": "warn"
+  "level": "warn",
   "module": "coffeelint-still-todo"
 }
 ```
@@ -39,7 +39,7 @@ and in the project `coffeelint.json`
 
 ```json
 "still_todo": {
-  "level": "warn"
+  "level": "warn",
   "module": "/path/to/project/node_modules/coffeelint-still-todo"
 }
 ```
