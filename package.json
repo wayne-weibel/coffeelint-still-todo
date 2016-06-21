@@ -1,10 +1,10 @@
 {
   "name": "coffeelint-still-todo",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "CoffeeLint Rule that checks for TODO comments",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./test/vows.js --spec test/*.coffee"
   },
   "keywords": [
     "coffeelint",
@@ -17,10 +17,11 @@
   "author": "Wayne Weibel",
   "license": "MIT",
   "dependencies": {
-    "coffee-script": "^1.10.0"
-  },
-  "peerDependencies": {
+    "coffee-script": "^1.10.0",
     "coffeelint": "^1.15"
+  },
+  "devDependencies": {
+    "vows": "^0.8.1"
   },
   "repository": {
     "type": "git",

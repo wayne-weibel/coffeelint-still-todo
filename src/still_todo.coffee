@@ -38,8 +38,8 @@ module.exports = class StillToDo
       _line = _line.replace(str, 'STRING')
 
     if regexes.lineHasComment.test(_line)
-      line = line.slice(_line.indexOf('#'))
-      if regexes.inlineToDo.test(line)
+      _line = _line.slice(_line.indexOf('#'))
+      if regexes.inlineToDo.test(_line)
         return true
 
     null
